@@ -10,7 +10,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # function to generate response from gemini pro model
 model=genai.GenerativeModel("gemini-pro")
 def get_gemini_response(question):
-    response = model.generate_content(question,max_length=1000)
+    response = model.generate_content(question)
     return response.text
 
 st.set_page_config(page_title="Q&A Demo")
