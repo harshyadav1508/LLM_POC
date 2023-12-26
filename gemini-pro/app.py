@@ -1,14 +1,28 @@
-import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv() #load env variable
+
+import streamlit as st
 import os
+import google.generativeai as genai
+
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-model = genai.GenerativeModel('gemini-pro')
-resp= model.generate_content("tell me a joke on engineer")
-print(resp)
-print(type(genai))
-print(resp.text)
+# function to generate response from gemini pro model
+model=genai.GenerativeModel("gemini-pro")
+def get_gemini_response(question):
+    response = model.generate_content(question,max_length=1000)
+    return response.text
+
+st.set_page_config(page_title="Q&A Demo")
+st.header("Gemini LLM Application")
+input=st.text_input("Input: ",key="input")
+submit = st.button("Ask the question")
+
+if submit:
+    response = get_gemini_response(input)
+    st.subheader("The resposne is")
+    st.write(response)
+
 
 
 
